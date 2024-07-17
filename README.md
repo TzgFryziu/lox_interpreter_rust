@@ -1,4 +1,4 @@
-Lox scripting language interpreter built in Rust based on craftinginterpreters book
+Lox scripting language lexer built in Rust based on craftinginterpreters book
 
 [craftinginterpreters](https://craftinginterpreters.com/)
 
