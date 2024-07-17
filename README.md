@@ -1,6 +1,6 @@
 Lox scripting language interpreter built in Rust based on craftinginterpreters book
 
-[craftinginterpreters](craftinginterpreters.com)
+[craftinginterpreters](https://craftinginterpreters.com/)
 
 ## Usage
 `<executable_name> <command> <filename>`
