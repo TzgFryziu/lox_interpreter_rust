@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum Token {
     // Single-character tokens
     LeftParen,
@@ -23,9 +24,28 @@ pub enum Token {
     LessEqual,
 
     // Literals
-    //Identifier,
-    //String,
-    //Number,
+    Identifier(String),
+    String(String),
+    Number(String),
+
+    // Keywords.
+    And,
+    Class,
+    Else,
+    False,
+    Fun,
+    For,
+    If,
+    Nil,
+    Or,
+    Print,
+    Return,
+    Super,
+    This,
+    True,
+    Var,
+    While,
+
     EOF,
 }
 
@@ -52,6 +72,14 @@ impl Token {
             Token::GreaterEqual => format!("GREATER_EQUAL >= null"),
             Token::Slash => format!("SLASH / null"),
             Token::EOF => format!("EOF  null"),
+            Token::String(data) => format!("STRING \"{}\" {}", data, data),
+            Token::Number(data) => format!("NUMBER {} {}", data, data),
+            Token::Identifier(data) => format!("IDENTIFIER {data} null"),
+            other => format!(
+                "{} {} null",
+                format!("{:?}", other).to_uppercase(),
+                format!("{:?}", other).to_lowercase()
+            ),
         }
     }
 }

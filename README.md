@@ -7,3 +7,7 @@ Lox scripting language interpreter built in Rust based on craftinginterpreters b
 
 ## Available commands
 - tokenize - Prints all tokens based on file contents
+
+## Error codes
+- 65 - Unexpected character
+- 80 - Unterminated String
