@@ -1,5 +1,4 @@
-mod token;
-use token::Token;
+use crate::token::Token;
 
 pub struct Lexer {
     input: Vec<u8>,
@@ -30,6 +29,11 @@ impl Lexer {
         for tok in self.tokens.iter() {
             println!("{}", tok.stringify())
         }
+    }
+
+    pub fn return_tokens(&mut self) -> &Vec<Token> {
+        self.tokenize();
+        return &self.tokens;
     }
 
     fn tokenize(&mut self) {

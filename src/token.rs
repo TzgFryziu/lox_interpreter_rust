@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Token {
     // Single-character tokens
     LeftParen,
@@ -81,5 +81,28 @@ impl Token {
                 format!("{:?}", other).to_lowercase()
             ),
         }
+    }
+
+    pub fn lexeme(&self) -> String {
+        let x = self.stringify().clone();
+        let v: Vec<&str> = x.split(" ").collect();
+        format!("{}", v[1])
+    }
+
+    pub fn literal(&self) -> String {
+        let x = self.stringify().clone();
+        let v: Vec<&str> = x.split(" ").collect();
+        format!("{}", v[2])
+    }
+
+    pub fn is_same_type(&self, other: &Token) -> bool {
+        if self == other {
+            return true;
+        }
+
+        matches!(
+            (self, other),
+            (Token::Number(_), Token::Number(_)) | (Token::String(_), Token::String(_))
+        )
     }
 }
