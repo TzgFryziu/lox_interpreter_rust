@@ -29,15 +29,7 @@ fn main() {
             scanner.print_tokens();
             exit(scanner.error_code);
         }
-        // "parse" => {
-        //     let file_contents = fs::read_to_string(filename).unwrap_or_else(|_| {
-        //         writeln!(io::stderr(), "Failed to read file {}", filename).unwrap();
-        //         String::new()
-        //     });
-        //     let mut parser = Parser::new(file_contents);
-        //     parser.print_tokens();
-        //     exit(parser.error_code);
-        // }
+
         "parse" => {
             let file_contents = fs::read_to_string(filename).unwrap_or_else(|_| {
                 writeln!(io::stderr(), "Failed to read file {}", filename).unwrap();
@@ -46,6 +38,9 @@ fn main() {
             let mut scanner = Lexer::new(file_contents);
 
             let tokens = scanner.return_tokens().to_vec();
+            if scanner.error_code != 0 {
+                exit(scanner.error_code)
+            }
             test(tokens);
         }
         _ => {
