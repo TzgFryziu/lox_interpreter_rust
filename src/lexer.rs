@@ -109,8 +109,8 @@ impl Lexer {
         }
         if self.is_at_end() {
             self.print_error(
-                format!("[line {}] Error: Unterminated String", starting_line,),
-                80,
+                format!("[line {}] Error: Unterminated string.", starting_line,),
+                65,
             );
             return;
         }
@@ -141,7 +141,7 @@ impl Lexer {
     }
 
     fn identifier(&mut self) {
-        while self.peek().is_ascii_alphabetic() || self.peek() == b'_' {
+        while self.peek().is_ascii_alphanumeric() || self.peek() == b'_' {
             self.next_char();
         }
         let mut value = String::new();

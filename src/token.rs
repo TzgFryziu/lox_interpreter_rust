@@ -73,7 +73,7 @@ impl Token {
             Token::Slash => format!("SLASH / null"),
             Token::EOF => format!("EOF  null"),
             Token::String(data) => format!("STRING \"{}\" {}", data, data),
-            Token::Number(data) => format!("NUMBER {} {}", data, data),
+            Token::Number(data) => format!("NUMBER {} {:?}", data, into_number(data)),
             Token::Identifier(data) => format!("IDENTIFIER {data} null"),
             other => format!(
                 "{} {} null",
@@ -90,9 +90,14 @@ impl Token {
     }
 
     pub fn literal(&self) -> String {
-        let x = self.stringify().clone();
-        let v: Vec<&str> = x.split(" ").collect();
-        format!("{}", v[2])
+        match self {
+            Token::String(x) => x.to_string(),
+            _ => {
+                let x = self.stringify().clone();
+                let v: Vec<&str> = x.split(" ").collect();
+                format!("{}", v[2])
+            }
+        }
     }
 
     pub fn is_same_type(&self, other: &Token) -> bool {
@@ -105,4 +110,8 @@ impl Token {
             (Token::Number(_), Token::Number(_)) | (Token::String(_), Token::String(_))
         )
     }
+}
+
+fn into_number(txt: &String) -> f64 {
+    txt.parse().unwrap()
 }

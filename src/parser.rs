@@ -1,6 +1,8 @@
 pub mod expr;
 mod printer;
 
+use std::process::exit;
+
 use super::token::Token;
 use expr::{Binary, Expr, Grouping, Literal, Unary, Visitor};
 use printer::AstPrinter;
@@ -37,7 +39,6 @@ impl Parser {
         }
         expr
     }
-    
 
     fn comparison(&mut self) -> Expr {
         let mut expr = self.term();
@@ -111,7 +112,7 @@ impl Parser {
         }
         if self.match_tokens(vec![Token::Nil]) {
             return Expr::Literal(Box::new(Literal {
-                value: "null".to_string(),
+                value: "nil".to_string(),
             }));
         }
 
@@ -133,7 +134,7 @@ impl Parser {
             return Expr::Grouping(Box::new(Grouping { expression: expr }));
         }
 
-        self.print_err(self.peek().clone(), "Expect expression.".to_string());
+        self.print_err(self.peek().clone(), "Expect expression.".to_string(), 65);
 
         Expr::Literal(Box::new(Literal {
             value: "bad".to_string(),
@@ -167,12 +168,12 @@ impl Parser {
         if self.check(&t) {
             return self.advance();
         }
-        self.print_err(t, message);
+        self.print_err(t, message, 65);
         Token::And
     }
-    fn print_err(&self, t: Token, m: String) {
+    fn print_err(&self, t: Token, m: String, code: i32) {
         eprintln!("{:?},{}", t, m);
-        panic!()
+        exit(code)
     }
 
     fn match_tokens(&mut self, types: Vec<Token>) -> bool {
